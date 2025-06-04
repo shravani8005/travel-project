@@ -1,0 +1,35 @@
+.container {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.card {
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 20px rgba(149, 14, 124, 0.3);
+}
+
+input.form-control {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(32, 68, 106, 0.6);
+  outline: none;
+}
+
+button.btn-primary {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background-color: #0e77e7;
+  transform: translateY(-3px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

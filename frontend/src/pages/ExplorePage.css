@@ -1,0 +1,40 @@
+.trip-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.trip-details-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.trip-details-row label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.trip-details-row input {
+  width: 60px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.trip-card button {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.trip-card button:last-child {
+  margin-right: 0;
+  display: block;
+  margin-top: 10px;
+}
