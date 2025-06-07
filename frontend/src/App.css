@@ -1,10 +1,17 @@
 /* Apply background image to the body */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden; /* prevent vertical scroll to remove white space */
+}
+
 body {
   background-image: url('/travel.jpg'); /* Update the path if needed */
-  background-size: cover;
+  background-size: cover; /* changed from contain to cover to fill full area */
   background-repeat: no-repeat;
-  background-position: center;
-  margin: 0;
+  background-position: center center; /* center image */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

@@ -37,3 +37,11 @@ exports.isUser = (req, res, next) => {
     }
     next();
 };
+
+// Middleware to check user or admin role
+exports.isUserOrAdmin = (req, res, next) => {
+    if (req.user.role !== 'user' && req.user.role !== 'admin') {
+        return res.status(403).json({ message: "Forbidden: Users or Admins only" });
+    }
+    next();
+};

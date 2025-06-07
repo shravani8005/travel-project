@@ -1,0 +1,46 @@
+.admin-dashboard-container {
+  background-color: transparent !important;
+  color: white !important;
+  min-height: 100vh !important;
+  padding: 10px 20px !important;
+  box-shadow: none !important;
+  border: none !important;
+  /* Remove background-image from CSS to avoid loader error */
+  /* background-image: url('/travel.jpg') !important; */
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.admin-dashboard-container h2 {
+  color: black !important;
+}
+
+.card {
+  background-color: black !important;
+  color: white !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-bottom: 10px !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+  outline: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.btn {
+  color: white !important;
+  background-color: #007bff !important;
+  border: none !important;
+}
+
+.btn-danger {
+  background-color: #dc3545 !important;
+  border: none !important;
+}
+
+.btn-secondary {
+  background-color: #007bff !important;
+  border: none !important;
+}

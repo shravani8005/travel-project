@@ -42,10 +42,10 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="nav-logo">TravelSite</div>
+      {/* Removed the nav-logo div to hide "TravelSite" text */}
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
+        {role !== 'admin' && <li><Link to="/about">About</Link></li>}
         <li><Link to="/explore">Explore</Link></li>
         {!isLoggedIn && (
           <>

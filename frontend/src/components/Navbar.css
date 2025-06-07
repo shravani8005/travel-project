@@ -1,9 +1,9 @@
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* since logo removed, align links to right */
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 1rem 2rem;
+    padding: 0.25rem 0.5rem; /* further reduced padding for slimmer navbar */
     color: rgb(27, 216, 216);
   }
   

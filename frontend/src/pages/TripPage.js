@@ -54,6 +54,11 @@ const TripPage = () => {
                     {trips.map(trip => (
                         <div key={trip._id} className="trip-card">
                             <h3>{trip.destination}</h3>
+                            <img
+                                src={trip.description.toLowerCase().includes('kolkata') ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Victoria_Memorial_Hall%2C_Kolkata.jpg/1200px-Victoria_Memorial_Hall%2C_Kolkata.jpg?20210609103154' : (trip.imageUrl || '/default-trip.jpg')}
+                                alt={trip.description}
+                                className="trip-image"
+                            />
                             <p>{trip.description}</p>
                             <p><strong>Days:</strong> {trip.numberOfDays}</p>
                             <p><strong>People:</strong> {trip.numberOfPeople}</p>

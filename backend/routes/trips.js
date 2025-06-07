@@ -44,6 +44,8 @@ router.post('/review/:id', verifyToken, isUser, tripController.addReview);
 router.post('/upload-image/:id', verifyToken, isAdmin, upload.single('image'), tripController.uploadTripImage);
 
 // Update days and people for a trip by USER
-router.put('/update-details/:id', verifyToken, isUser, tripController.updateTripDetails);
+const { verifyToken, isUser, isUserOrAdmin } = require('../middleware/auth');
+router.put('/update-details/:id', verifyToken, isUserOrAdmin, tripController.updateTripDetails);
 
+// Add this line to export the router at the end if missing
 module.exports = router;

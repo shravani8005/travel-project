@@ -1,13 +1,31 @@
 .homepage-container {
-  padding: 20px;
+  padding: 0 20px 20px 20px; /* remove top padding to eliminate white space */
   font-family: Arial, sans-serif;
+  height: 100vh; /* fill full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* moved text to left */
+  color: white;
+  text-align: left; /* align text to left */
+  margin-top: 40px; /* bring text lines down a bit */
+}
+
+.homepage-title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.homepage-subtitle {
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 .carousel-container {
   overflow-x: auto;
   white-space: nowrap;
-  padding-bottom: 10px;
-  margin-top: 20px;
+  padding-bottom: 0; /* removed bottom padding to eliminate white space */
+  margin-top: 0; /* removed top margin to reduce white space */
 }
 
 .carousel {

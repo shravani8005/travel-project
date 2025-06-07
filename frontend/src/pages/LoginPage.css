@@ -1,9 +1,70 @@
-.container {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-container {
   animation: fadeIn 1.5s ease-in-out;
+  background: transparent;
+  margin-bottom: 0 !important; /* remove bottom margin */
+  padding-bottom: 0 !important; /* remove bottom padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* align items at top */
+  align-items: center; /* center content horizontally */
+  height: 90vh; /* reduce height to move box up */
+  padding-top: 40px; /* add padding top to move box down a bit */
+  box-shadow: none; /* remove any box shadow */
+  border: none; /* remove any border */
+}
+
+.custom-col {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  max-width: 1000px !important; /* force wider width */
+  width: 100% !important;
+  margin: 0 auto !important; /* center horizontally */
+  box-shadow: none; /* remove any box shadow */
+  border: none; /* remove any border */
+}
+
+/* Custom row styles */
+.custom-row {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Move black background and padding to card */
+.card {
+  transition: box-shadow 0.3s ease;
+  background-color: black; /* black background for entire box */
+  color: white; /* white text */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: none; /* remove any box shadow */
+  outline: none; /* remove focus outline */
+  min-height: 250px; /* reduce height */
+  max-width: 1600px; /* increase width */
+  width: 100%;
+}
+
+.card:hover {
+  box-shadow: none; /* removed highlighting box shadow */
+}
+
+/* Heading inside card */
+.card h2 {
+  color: white;
+  margin-bottom: 20px;
 }
 
 .card {
   transition: box-shadow 0.3s ease;
+  background-color: black; /* changed to black background */
+  color: white; /* default text color white inside card */
 }
 
 .card:hover {
@@ -16,16 +77,23 @@ input.form-control {
 
 input.form-control:focus {
   border-color: #007bff;
-  box-shadow: 0 0 8px rgba(32, 68, 106, 0.6);
+  box-shadow: none; /* remove input focus shadow */
   outline: none;
+}
+
+.form-label {
+  color: white; /* labels Email and Password white */
 }
 
 button.btn-primary {
   transition: background-color 0.3s ease, transform 0.3s ease;
+  background-color: white; /* button background white */
+  color: black; /* button font black */
+  border: none; /* remove default border */
 }
 
 button.btn-primary:hover {
-  background-color: #0e77e7;
+  background-color: #e0e0e0; /* lighter grey on hover */
   transform: translateY(-3px);
 }
 

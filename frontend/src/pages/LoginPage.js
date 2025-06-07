@@ -36,11 +36,11 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    <h2 className="text-center mb-4">Login</h2>
+        <div className="custom-container mt-5">
+            <div className="custom-row justify-content-center">
+                <div className="custom-col">
                     <form onSubmit={handleLogin} className="card p-4 shadow">
+                        <h2 className="text-center mb-4">Login</h2>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">
                                 Email

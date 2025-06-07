@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CreateTrip from '../components/CreateTrip';
-import { useNavigate } from 'react-router-dom';
+// Removed unused import of useNavigate
+import './AdminDashboardPage.css';
 
 function AdminDashboardPage() {
   const [trips, setTrips] = useState([]);
+  const [editingTrip, setEditingTrip] = useState(null);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
+  // Removed unused navigate variable
 
-  useEffect(() => {
+  const fetchTrips = () => {
     axios.get('/api/trips', { headers: { Authorization: `Bearer ${token}` } })
       .then(res => setTrips(res.data));
+  };
+
+  useEffect(() => {
+    fetchTrips();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const handleDelete = async (id) => {
@@ -18,28 +25,29 @@ function AdminDashboardPage() {
     setTrips(trips.filter(trip => trip._id !== id));
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/login');
+  // Removed unused handleLogout function as logout is handled in Navbar
+
+  const handleUpdate = () => {
+    fetchTrips();
+    setEditingTrip(null);
   };
 
   return (
-    <div className="container mt-4">
+    <div className="admin-dashboard-container mt-4" style={{ backgroundImage: `url('/travel.jpg')`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="d-flex justify-content-between align-items-center">
         <h2>Admin Dashboard</h2>
-        <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+        {/* Removed Logout button here as it is present in Navbar */}
       </div>
-      <CreateTrip />
-      <div className="mt-4">
+      <CreateTrip trip={editingTrip} onUpdate={handleUpdate} />
+      <div className="container mt-4" style={{ color: 'white' }}>
         {trips.length === 0 && <p>No trips available.</p>}
         {trips.map(trip => (
-          <div key={trip._id} className="card mb-3 p-3">
+          <div key={trip._id} className="card mb-3 p-3" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: 'white' }}>
             <h3>{trip.name}</h3>
             <p>{trip.description}</p>
-            <p><strong>Price:</strong> ${trip.price}</p>
-            <p>
-              <strong>Available:</strong>{' '}
+            <p><strong>Price:</strong> ₹{trip.price}</p>
+            <p style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <strong>Available:</strong>
               <input
                 type="checkbox"
                 checked={trip.available}
@@ -54,6 +62,7 @@ function AdminDashboardPage() {
                 }}
               />
             </p>
+            <button className="btn btn-primary me-2" onClick={() => setEditingTrip(trip)}>Edit</button>
             <button className="btn btn-danger" onClick={() => handleDelete(trip._id)}>Delete</button>
           </div>
         ))}

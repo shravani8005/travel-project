@@ -83,18 +83,21 @@ const ExplorePage = () => {
 
   const handleSaveDetails = async (tripId) => {
     const details = editableDetails[tripId];
-    if (!details || !details.numberOfDays || !details.numberOfPeople) {
-      alert("Please enter valid Days and People values.");
+    const numberOfDays = Number(details?.numberOfDays);
+    const numberOfPeople = Number(details?.numberOfPeople);
+
+    if (!details || isNaN(numberOfDays) || isNaN(numberOfPeople) || numberOfDays <= 0 || numberOfPeople <= 0) {
+      alert("Please enter valid positive numbers for Days and People.");
       return;
     }
     try {
       await axios.put(`trips/update-details/${tripId}`, {
-        numberOfDays: details.numberOfDays,
-        numberOfPeople: details.numberOfPeople
+        numberOfDays,
+        numberOfPeople
       });
       alert("Trip details updated successfully.");
       setTrips(prevTrips => prevTrips.map(trip =>
-        trip._id === tripId ? { ...trip, numberOfDays: details.numberOfDays, numberOfPeople: details.numberOfPeople } : trip
+        trip._id === tripId ? { ...trip, numberOfDays, numberOfPeople } : trip
       ));
     } catch (error) {
       console.error("Failed to update trip details:", error);
@@ -112,7 +115,7 @@ const ExplorePage = () => {
             <div key={trip._id} className="trip-card">
               <h3>{trip.description}</h3>
               <img
-                src={trip.imageUrl || '/default-trip.jpg'}
+                src={trip.description.toLowerCase().includes('kolkata') ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Victoria_Memorial_Hall%2C_Kolkata.jpg/1200px-Victoria_Memorial_Hall%2C_Kolkata.jpg?20210609103154' : (trip.imageUrl || '/default-trip.jpg')}
                 alt={trip.description}
                 className="trip-image"
               />
@@ -125,12 +128,15 @@ const ExplorePage = () => {
                     min="1"
                     value={editableDetails[trip._id]?.numberOfDays ?? trip.numberOfDays}
                     onChange={(e) => {
-                      const value = parseInt(e.target.value, 10);
+                      let value = parseInt(e.target.value, 10);
+                      if (isNaN(value) || value < 1) {
+                        value = 1;
+                      }
                       setEditableDetails(prev => ({
                         ...prev,
                         [trip._id]: {
                           ...prev[trip._id],
-                          numberOfDays: isNaN(value) ? '' : value
+                          numberOfDays: value
                         }
                       }));
                     }}
@@ -144,12 +150,15 @@ const ExplorePage = () => {
                     min="1"
                     value={editableDetails[trip._id]?.numberOfPeople ?? trip.numberOfPeople}
                     onChange={(e) => {
-                      const value = parseInt(e.target.value, 10);
+                      let value = parseInt(e.target.value, 10);
+                      if (isNaN(value) || value < 1) {
+                        value = 1;
+                      }
                       setEditableDetails(prev => ({
                         ...prev,
                         [trip._id]: {
                           ...prev[trip._id],
-                          numberOfPeople: isNaN(value) ? '' : value
+                          numberOfPeople: value
                         }
                       }));
                     }}
