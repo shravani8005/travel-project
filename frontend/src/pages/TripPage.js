@@ -21,6 +21,11 @@ const TripPage = () => {
     }, []);
 
     const bookTrip = async (id) => {
+        const trip = trips.find(t => t._id === id);
+        if (trip && trip.available === false) {
+            alert('Trip is currently unavailable.');
+            return;
+        }
         try {
             await axios.post(`/trips/book/${id}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -46,30 +51,36 @@ const TripPage = () => {
     };
 
     return (
-        <div className="trippage-container">
-            <h2>Popular Tours</h2>
-            {trips.length === 0 && <p>No tours available.</p>}
-            <div className="carousel-container">
-                <div className="carousel">
-                    {trips.map(trip => (
-                        <div key={trip._id} className="trip-card">
-                            <h3>{trip.destination}</h3>
-                            <img
-                                src={trip.description.toLowerCase().includes('kolkata') ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Victoria_Memorial_Hall%2C_Kolkata.jpg/1200px-Victoria_Memorial_Hall%2C_Kolkata.jpg?20210609103154' : (trip.imageUrl || '/default-trip.jpg')}
-                                alt={trip.description}
-                                className="trip-image"
-                            />
-                            <p>{trip.description}</p>
-                            <p><strong>Days:</strong> {trip.numberOfDays}</p>
-                            <p><strong>People:</strong> {trip.numberOfPeople}</p>
-                            <p><strong>Price:</strong> ₹{trip.price}</p>
-                                <p><strong>Rating:</strong> {(trip.ratings !== undefined && trip.ratings !== null) ? trip.ratings.toFixed(1) : 'N/A'} / 5</p>
-                            <button onClick={() => bookTrip(trip._id)}>Book Trip</button>
-                            <button onClick={() => viewReviews(trip.reviews)}>View Reviews</button>
-                        </div>
-                    ))}
+        <div className="trippage-container hero" style={{background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"}}>
+            {/* Removed header and profile link to avoid duplication with Navbar */}
+            {/* Removed Booking and History tabs to avoid duplication with Navbar */}
+            <section className="explore-section">
+                <h2 className="subheading">Explore Popular Tours</h2>
+                <hr className="divider" />
+                {trips.length === 0 && <p>No tours available.</p>}
+                <div className="carousel-container">
+                    <div className="carousel">
+                        {trips.map(trip => (
+                            <div key={trip._id} className="trip-card">
+                                <h3>{trip.destination ? trip.destination.charAt(0).toUpperCase() + trip.destination.slice(1) : ''}</h3>
+                                <img
+                                    src={trip.description && trip.description.toLowerCase().includes('kolkata') ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Victoria_Memorial_Hall%2C_Kolkata.jpg/1200px-Victoria_Memorial_Hall%2C_Kolkata.jpg?20210609103154' : (trip.imageUrl || '/default-trip.jpg')}
+                                    alt={trip.description}
+                                    className="trip-image"
+                                />
+                                <ul className="trip-details">
+                                    <li><strong>Price:</strong> ₹{trip.price}</li>
+                                    <li><strong>Days:</strong> {trip.numberOfDays}</li>
+                                    <li><strong>People:</strong> {trip.numberOfPeople}</li>
+                                    <li><strong>Availability:</strong> {trip.available ? 'Available' : 'Unavailable'}</li>
+                                </ul>
+                                <button onClick={() => bookTrip(trip._id)}>Book Trip</button>
+                                <button onClick={() => viewReviews(trip.reviews)}>View Reviews</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </section>
 
             {showReviews && (
                 <div className="reviews-modal">

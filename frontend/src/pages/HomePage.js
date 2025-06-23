@@ -1,39 +1,37 @@
-import React, { useState } from "react";
-import axios from '../axiosInstance';
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from '../components/Footer';
 import "./HomePage.css";
 
 const HomePage = () => {
-  const [trips, setTrips] = useState([]);
-  const [token, setToken] = React.useState(localStorage.getItem('token'));
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  React.useEffect(() => {
-    const fetchTrips = async () => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
       try {
-        const response = await axios.get('trips');
-        setTrips(response.data);
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        setIsAdmin(payload.role === 'admin');
       } catch (error) {
-        console.error('Error fetching trips:', error);
+        console.error('Failed to parse token', error);
       }
-    };
-    fetchTrips();
-
-    const handleLogin = () => {
-      setToken(localStorage.getItem('token'));
-    };
-
-    window.addEventListener('login', handleLogin);
-    return () => {
-      window.removeEventListener('login', handleLogin);
-    };
+    }
   }, []);
 
   return (
-    <div className="homepage-container">
-      <h1 className="homepage-title">Travel Companion</h1>
-      <p className="homepage-subtitle"> Explore the world!</p>
-    </div>
+    <>
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Your Adventure Starts Here</h1>
+          <p>Explore the world with Travel Companion</p>
+          {!isAdmin && (
+            <button className="btn-cta" onClick={() => navigate('/explore')}>Start Your Journey</button>
+          )}
+        </div>
+      </section>
+      <Footer />
+    </>
   );
 };
 

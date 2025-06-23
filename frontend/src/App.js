@@ -10,6 +10,8 @@ import Navbar from './components/Navbar'; // Import the Navbar
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import AboutPage from './pages/AboutPage';
 import ExplorePage from './pages/ExplorePage';
+import BookingHistoryPage from './pages/BookingHistoryPage';
+import AdminBookingHistoryPage from './pages/AdminBookingHistoryPage';
 
 const App = () => {
     return (
@@ -25,6 +27,8 @@ const App = () => {
                 <Route path="/explore" element={<ExplorePage />} />
                 <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/booking-history" element={<BookingHistoryPage />} />
+                <Route path="/admin-booking-history" element={<AdminBookingHistoryPage />} />
             </Routes>
         </Router>
     );

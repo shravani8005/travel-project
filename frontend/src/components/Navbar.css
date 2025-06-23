@@ -1,21 +1,116 @@
 .navbar {
-    display: flex;
-    justify-content: flex-end; /* since logo removed, align links to right */
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0.25rem 0.5rem; /* further reduced padding for slimmer navbar */
-    color: rgb(27, 216, 216);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #2c3e50; /* dark blue */
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.nav-logo a {
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a,
+.nav-links li button.profile-button {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover,
+.nav-links li button.profile-button:hover {
+  color: #1abc9c; /* teal */
+}
+
+.user-menu {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background: #34495e;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 150px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.dropdown li {
+  padding: 0;
+}
+
+.dropdown li a,
+.dropdown li button.logout-button {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: white;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown li a:hover,
+.dropdown li button.logout-button:hover {
+  background-color: #1abc9c;
+  color: white;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: white;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
   }
-  
   .nav-links {
-    list-style: none;
+    flex-direction: column;
+    width: 100%;
+    display: none;
+  }
+  .nav-links.active {
     display: flex;
-    gap: 1.5rem;
   }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: rgb(235, 242, 246);
-    font-weight: bold;
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
   }
-  
+}

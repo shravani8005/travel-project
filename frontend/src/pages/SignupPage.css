@@ -1,8 +1,14 @@
 .container {
   animation: fadeIn 1.5s ease-in-out;
+  background-color: black !important;
+  color: white;
 }
 
 .card {
+  background-color: black !important;
+  color: #0f0e0efa;
+  box-shadow: none !important;
+  border: none !important;
   transition: box-shadow 0.3s ease;
 }
 
@@ -12,12 +18,33 @@
 
 input.form-control {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: black;
+  color: white;
+  border: 1px solid #555;
+}
+
+input.form-control::placeholder {
+  color: #ccc;
 }
 
 input.form-control:focus {
   border-color: #032544;
   box-shadow: 0 0 8px rgba(108, 117, 125, 0.6);
   outline: none;
+  background-color: black;
+  color: white;
+}
+
+button.btn-primary {
+  background-color: white;
+  color: black;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background-color: #e0e0e0;
+  color: black;
 }
 
 button.btn-secondary {

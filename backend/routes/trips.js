@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const tripController = require('../controllers/tripController');
-const { verifyToken, isAdmin, isUser } = require('../middleware/auth');
+const { verifyToken, isAdmin, isUser, isUserOrAdmin } = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
 
@@ -37,6 +37,12 @@ router.put('/:id/availability', verifyToken, isAdmin, tripController.updateAvail
 // Only USER can book a trip
 router.post('/book/:id', verifyToken, isUser, tripController.bookTrip);
 
+// New route: Get bookings for logged-in user
+router.get('/bookings/user', verifyToken, isUser, tripController.getUserBookings);
+
+// New route: Get all bookings for admin
+router.get('/bookings/admin', verifyToken, isAdmin, tripController.getAllBookings);
+
 // Add review to a trip
 router.post('/review/:id', verifyToken, isUser, tripController.addReview);
 
@@ -44,7 +50,6 @@ router.post('/review/:id', verifyToken, isUser, tripController.addReview);
 router.post('/upload-image/:id', verifyToken, isAdmin, upload.single('image'), tripController.uploadTripImage);
 
 // Update days and people for a trip by USER
-const { verifyToken, isUser, isUserOrAdmin } = require('../middleware/auth');
 router.put('/update-details/:id', verifyToken, isUserOrAdmin, tripController.updateTripDetails);
 
 // Add this line to export the router at the end if missing

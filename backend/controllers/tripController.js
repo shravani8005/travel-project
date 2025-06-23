@@ -1,5 +1,19 @@
-const Trip = require('../models/Trip'); // ✅ make sure this is correct
-const User = require('../models/User'); // Import User model
+const Trip = require('../models/Trip');
+const User = require('../models/User');
+
+// GET user ID by email
+exports.getUserIdByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ userId: user._id });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch user ID', error: err.message });
+  }
+};
 
 // GET all trips
 exports.getAllTrips = async (req, res) => {
@@ -34,6 +48,77 @@ exports.getAllTrips = async (req, res) => {
     res.status(200).json(tripsWithRatings);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch trips' });
+  }
+};
+
+// GET bookings for logged-in user
+exports.getUserBookings = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    // Find trips where bookings array contains userId
+    const trips = await Trip.find({ bookings: userId });
+
+    res.status(200).json(trips);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch user bookings', error: err.message });
+  }
+};
+
+const mongoose = require('mongoose');
+
+// GET all bookings for admin with user info
+exports.getAllBookings = async (req, res) => {
+  try {
+    console.log('Request user object:', req.user);
+    const userIdQuery = req.query.userId;
+    console.log('User ID query param:', userIdQuery);
+
+    let filter = {};
+    if (userIdQuery) {
+      const userObjectId = mongoose.Types.ObjectId(userIdQuery);
+      filter = { bookings: userObjectId };
+    }
+
+    // Find trips where bookings array contains userObjectId if provided, else all trips
+    const trips = await Trip.find(filter);
+    console.log('Trips fetched in getAllBookings:', trips);
+
+    // Collect all userIds from bookings
+    const userIds = trips.flatMap(trip => trip.bookings);
+    const users = await User.find({ _id: { $in: userIds } }).select('username email').lean();
+    const userMap = {};
+    users.forEach(u => {
+      userMap[u._id.toString()] = { username: u.username, email: u.email };
+    });
+
+    // Map trips bookings to include user info and trip details, filter bookings by userIdQuery if provided
+    const tripsWithBookingDetails = trips.map(trip => {
+      const bookingsWithUserInfo = (trip.bookings || [])
+        .filter(userId => !userIdQuery || userId.toString() === userIdQuery.toString())
+        .map(userId => ({
+          userId,
+          userInfo: userMap[userId.toString()] || { username: 'Unknown User', email: '' },
+          tripDetails: {
+            destination: trip.destination,
+            description: trip.description,
+            price: trip.price,
+            date: trip.date,
+            numberOfDays: trip.numberOfDays,
+            numberOfPeople: trip.numberOfPeople,
+            hotel: trip.hotel,
+            imageUrl: trip.imageUrl
+          }
+        }));
+      return {
+        _id: trip._id,
+        bookings: bookingsWithUserInfo
+      };
+    });
+
+    res.status(200).json(tripsWithBookingDetails);
+  } catch (err) {
+    console.error('Error in getAllBookings:', err);
+    res.status(500).json({ message: 'Failed to fetch all bookings', error: err.message });
   }
 };
 
@@ -134,6 +219,10 @@ exports.bookTrip = async (req, res) => {
     const trip = await Trip.findById(tripId);
     if (!trip) {
       return res.status(404).json({ message: 'Trip not found' });
+    }
+
+    if (trip.available === false) {
+      return res.status(400).json({ message: 'Trip is currently unavailable for booking' });
     }
 
     // Assuming Trip model has a bookings array to store user bookings

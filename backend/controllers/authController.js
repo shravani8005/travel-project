@@ -31,9 +31,10 @@ transporter.verify(function (error, success) {
 exports.sendOTP = async (req, res) => {
     const { email } = req.body;
     const otp = crypto.randomInt(100000, 999999).toString();
-    const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 mins
+    const otpExpiry = Date.now() + 5 * 60 * 1000; // 5 mins expiry as requested
 
     try {
+        // No restriction on email, accept any email
         let user = await User.findOne({ email });
 
         if (user) {

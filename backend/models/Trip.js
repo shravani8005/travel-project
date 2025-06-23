@@ -27,6 +27,12 @@ const tripSchema = new mongoose.Schema({
       comment: String
     }
   ],
+  bookings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   imageUrl: {
     type: String,
     default: ''
