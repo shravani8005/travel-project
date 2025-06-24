@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://travel-project-backend-iwoe.onrender.com',
+  baseURL: 'https://travel-project-backend-iwoe.onrender.com/api', // Add /api if needed
 });
 
 // Request interceptor
