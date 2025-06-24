@@ -1,8 +1,12 @@
 import axios from 'axios';
 
+
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:10000',
+  baseURL: 'https://travel-project-backend-iwoe.onrender.com',  // 🔥 your live backend URL
 });
+
+export default instance;
+
 
 
 // Add a request interceptor to include the token in headers
