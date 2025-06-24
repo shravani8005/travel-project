@@ -2,9 +2,14 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://travel-project-backend-iwoe.onrender.com',
+  timeout: 10000, // 10 second timeout
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json'
+  }
 });
 
-// ✅ Add a request interceptor to include the token in headers
+// Request interceptor
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -18,5 +23,16 @@ instance.interceptors.request.use(
   }
 );
 
-// ✅ Only one default export here
+// Response interceptor
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default instance;
