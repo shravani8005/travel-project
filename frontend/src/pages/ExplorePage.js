@@ -48,11 +48,6 @@ const ExplorePage = () => {
     return fixed.charAt(0).toUpperCase() + fixed.slice(1);
   };
 
-  const handleBookTripClick = () => {
-    alert("To book a trip, please visit the 'Booking Trip' page. \n(Note: Booking feature coming soon!)");
-    navigate('/book');  // if you have a /book route
-  };
-
   return (
     <div className="explore-container hero" style={{
       background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"
@@ -74,8 +69,7 @@ const ExplorePage = () => {
             <p><strong>Days:</strong> {trip.numberOfDays || 'N/A'}</p>
             <p><strong>People:</strong> {trip.numberOfPeople || 'N/A'}</p>
             <p><strong>Availability:</strong> {trip.available ? 'Available' : 'Unavailable'}</p>
-            <button onClick={handleBookTripClick}>Book Trip</button>
-            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginLeft: '10px' }}>View Reviews</button>
+            <button onClick={() => alert('View reviews feature coming soon!')}>View Reviews</button>
             <button onClick={() => alert('Add review feature coming soon!')} style={{ marginLeft: '10px' }}>Add Review</button>
           </div>
         ))}
