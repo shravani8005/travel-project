@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || '/api', // ✅ Use deployed URL or fallback to local
+  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:10000',
 });
+
 
 // Add a request interceptor to include the token in headers
 instance.interceptors.request.use(
