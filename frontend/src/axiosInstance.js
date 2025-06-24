@@ -1,15 +1,10 @@
 import axios from 'axios';
 
-
 const instance = axios.create({
-  baseURL: 'https://travel-project-backend-iwoe.onrender.com',  // 🔥 your live backend URL
+  baseURL: 'https://travel-project-backend-iwoe.onrender.com',
 });
 
-export default instance;
-
-
-
-// Add a request interceptor to include the token in headers
+// ✅ Add a request interceptor to include the token in headers
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -23,4 +18,5 @@ instance.interceptors.request.use(
   }
 );
 
+// ✅ Only one default export here
 export default instance;
