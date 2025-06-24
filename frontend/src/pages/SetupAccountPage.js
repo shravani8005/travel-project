@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../axiosInstance';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,20 +10,27 @@ const SetupAccountPage = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        if (!email) {
+            alert('No email found. Redirecting to signup.');
+            navigate('/signup');
+        }
+    }, [email, navigate]);
+
     const handleSetup = async (e) => {
         e.preventDefault();
         try {
             await axios.post('/auth/setup-account', { email, name, password });
-            alert('Account setup successful. Please login.');
+            alert('✅ Account setup successful! Please login.');
             navigate('/login');
         } catch (error) {
-            alert(error?.response?.data?.message || 'Error setting up account');
+            alert(error?.response?.data?.message || '❌ Error setting up account');
         }
     };
 
     return (
         <div className="container mt-5">
-            <h2>Setup Account</h2>
+            <h2 className="text-center mb-4">Setup Account</h2>
             <form onSubmit={handleSetup} className="card p-4 shadow">
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
