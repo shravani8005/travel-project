@@ -12,7 +12,10 @@ console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD);
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://my-mern-site.netlify.app', // your frontend domain
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve uploads folder statically
