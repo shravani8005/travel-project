@@ -13,18 +13,14 @@ const ExplorePage = () => {
       navigate('/login');
       return;
     }
-
     const fetchTrips = async () => {
       try {
-        const response = await axios.get('/api/trips', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axios.get('/trips');
         setTrips(response.data);
       } catch (error) {
         console.error('Error fetching trips:', error);
       }
     };
-
     fetchTrips();
   }, [navigate]);
 
@@ -51,7 +47,9 @@ const ExplorePage = () => {
   };
 
   return (
-    <div className="explore-container hero" style={{ background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat" }}>
+    <div className="explore-container hero" style={{
+      background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"
+    }}>
       <h1>Explore Popular Tours</h1>
       {trips.length === 0 && <p>No tours available.</p>}
       <div className="card-grid">
@@ -101,9 +99,9 @@ const ExplorePage = () => {
               />
             </label>
             <p><strong>Availability:</strong> {trip.available ? 'Available' : 'Unavailable'}</p>
-            <button onClick={() => alert('Book trip feature coming soon!')}>Book Trip</button>
-            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginLeft: '10px' }}>View Reviews</button>
-            <button onClick={() => alert('Add review feature coming soon!')} style={{ marginLeft: '10px' }}>Add Review</button>
+            {/* Book Trip button removed */}
+            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginRight: '10px' }}>View Reviews</button>
+            <button onClick={() => alert('Add review feature coming soon!')}>Add Review</button>
           </div>
         ))}
       </div>
