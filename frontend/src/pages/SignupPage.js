@@ -8,7 +8,7 @@ const SignupPage = () => {
     const [otpSent, setOtpSent] = useState(false);
     const [otp, setOtp] = useState('');
     const [isVerified, setIsVerified] = useState(false);
-    const [name, setName] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const SignupPage = () => {
     const setupAccount = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/auth/setup-account', { email, name, password });
+            await axios.post('/auth/setup-account', { email, name: userName, password });
             alert('Account setup successful. Please login.');
             navigate('/login');
         } catch (error) {
@@ -88,8 +88,8 @@ const SignupPage = () => {
                             type="text"
                             id="name"
                             className="form-control"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
                             required
                         />
                     </div>
