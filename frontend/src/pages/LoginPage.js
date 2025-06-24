@@ -11,7 +11,7 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/auth/login', { email, password });
+            const response = await axios.post('/api/auth/login', { email, password });
             const { token, role } = response.data;
 
             // Save token and role to localStorage
@@ -25,9 +25,9 @@ const LoginPage = () => {
 
             // Redirect based on role
             if (role === 'admin') {
-                navigate('/admin-dashboard'); // Customize this route if needed
+                navigate('/admin-dashboard'); // Customize if needed
             } else {
-                navigate('/'); // Redirect to Home page instead of trips
+                navigate('/'); // Redirect to homepage
             }
         } catch (error) {
             console.error('Login error:', error);
@@ -42,9 +42,7 @@ const LoginPage = () => {
                     <form onSubmit={handleLogin} className="card p-4 shadow">
                         <h2 className="text-center mb-4">Login</h2>
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">
-                                Email
-                            </label>
+                            <label htmlFor="email" className="form-label">Email</label>
                             <input
                                 type="email"
                                 id="email"
@@ -55,9 +53,7 @@ const LoginPage = () => {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">
-                                Password
-                            </label>
+                            <label htmlFor="password" className="form-label">Password</label>
                             <input
                                 type="password"
                                 id="password"
@@ -67,9 +63,7 @@ const LoginPage = () => {
                                 required
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary w-100">
-                            Login
-                        </button>
+                        <button type="submit" className="btn btn-primary w-100">Login</button>
                     </form>
                 </div>
             </div>
