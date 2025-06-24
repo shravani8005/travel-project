@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from '../axiosInstance';
 import { useNavigate } from "react-router-dom";
-import "./ExplorePage.css";
+import "./ExplorePage.css"; // ✅ Make sure this file exists in src/pages or src
 
 const ExplorePage = () => {
   const [trips, setTrips] = useState([]);
@@ -13,14 +13,16 @@ const ExplorePage = () => {
       navigate('/login');
       return;
     }
+
     const fetchTrips = async () => {
       try {
-        const response = await axios.get('/trips');
+        const response = await axios.get('/trips'); // ✅ Correct relative API call using axiosInstance
         setTrips(response.data);
       } catch (error) {
         console.error('Error fetching trips:', error);
       }
     };
+
     fetchTrips();
   }, [navigate]);
 
@@ -47,9 +49,7 @@ const ExplorePage = () => {
   };
 
   return (
-    <div className="explore-container hero" style={{
-      background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"
-    }}>
+    <div className="explore-container hero" style={{background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"}}>
       <h1>Explore Popular Tours</h1>
       {trips.length === 0 && <p>No tours available.</p>}
       <div className="card-grid">
@@ -99,9 +99,7 @@ const ExplorePage = () => {
               />
             </label>
             <p><strong>Availability:</strong> {trip.available ? 'Available' : 'Unavailable'}</p>
-            {/* Removed Book Trip button only */}
-            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginLeft: '10px' }}>View Reviews</button>
-            <button onClick={() => alert('Add review feature coming soon!')} style={{ marginLeft: '10px' }}>Add Review</button>
+            {/* ❌ Removed "Book Trip" & review buttons as per your request */}
           </div>
         ))}
       </div>
