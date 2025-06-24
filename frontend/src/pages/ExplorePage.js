@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from '../axiosInstance';
 import { useNavigate } from "react-router-dom";
-import "./ExplorePage.css"; // ✅ Make sure this file exists in src/pages or src
+import "./ExplorePage.css";
 
 const ExplorePage = () => {
   const [trips, setTrips] = useState([]);
@@ -16,7 +16,7 @@ const ExplorePage = () => {
 
     const fetchTrips = async () => {
       try {
-        const response = await axios.get('/trips'); // ✅ Correct relative API call using axiosInstance
+        const response = await axios.get('/trips');
         setTrips(response.data);
       } catch (error) {
         console.error('Error fetching trips:', error);
@@ -48,8 +48,15 @@ const ExplorePage = () => {
     return fixed.charAt(0).toUpperCase() + fixed.slice(1);
   };
 
+  const handleBookTripClick = () => {
+    alert("To book a trip, please visit the 'Booking Trip' page. \n(Note: Booking feature coming soon!)");
+    navigate('/book');  // if you have a /book route
+  };
+
   return (
-    <div className="explore-container hero" style={{background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"}}>
+    <div className="explore-container hero" style={{
+      background: "linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat"
+    }}>
       <h1>Explore Popular Tours</h1>
       {trips.length === 0 && <p>No tours available.</p>}
       <div className="card-grid">
@@ -64,42 +71,12 @@ const ExplorePage = () => {
             <p>{trip.description}</p>
             <div className="rating">{renderStars(trip.ratings || 0)}</div>
             <p><strong>Price:</strong> ₹{trip.price}</p>
-            <label>
-              Days:
-              <input
-                type="number"
-                min="1"
-                value={trip.customDays || trip.numberOfDays || ''}
-                onChange={(e) => {
-                  const newDays = parseInt(e.target.value, 10);
-                  setTrips((prevTrips) =>
-                    prevTrips.map((t) =>
-                      t._id === trip._id ? { ...t, customDays: newDays } : t
-                    )
-                  );
-                }}
-                style={{ width: '50px', marginLeft: '5px' }}
-              />
-            </label>
-            <label>
-              People:
-              <input
-                type="number"
-                min="1"
-                value={trip.customPeople || trip.numberOfPeople || ''}
-                onChange={(e) => {
-                  const newPeople = parseInt(e.target.value, 10);
-                  setTrips((prevTrips) =>
-                    prevTrips.map((t) =>
-                      t._id === trip._id ? { ...t, customPeople: newPeople } : t
-                    )
-                  );
-                }}
-                style={{ width: '50px', marginLeft: '5px' }}
-              />
-            </label>
+            <p><strong>Days:</strong> {trip.numberOfDays || 'N/A'}</p>
+            <p><strong>People:</strong> {trip.numberOfPeople || 'N/A'}</p>
             <p><strong>Availability:</strong> {trip.available ? 'Available' : 'Unavailable'}</p>
-            {/* ❌ Removed "Book Trip" & review buttons as per your request */}
+            <button onClick={handleBookTripClick}>Book Trip</button>
+            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginLeft: '10px' }}>View Reviews</button>
+            <button onClick={() => alert('Add review feature coming soon!')} style={{ marginLeft: '10px' }}>Add Review</button>
           </div>
         ))}
       </div>
