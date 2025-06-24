@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from '../axiosInstance';
+import axiosInstance from '../axiosInstance'; // ✅ Correct import
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
 
@@ -15,7 +15,7 @@ const SignupPage = () => {
     const sendOtp = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/auth/send-otp', { email });
+            await axiosInstance.post('/api/auth/send-otp', { email }); // ✅ Correct route
             setOtpSent(true);
             alert('OTP sent to your email');
         } catch (error) {
@@ -26,7 +26,7 @@ const SignupPage = () => {
     const verifyOtp = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/auth/verify-otp', { email, otp });
+            await axiosInstance.post('/api/auth/verify-otp', { email, otp }); // ✅ Correct route
             setIsVerified(true);
             alert('OTP verified successfully');
         } catch (error) {
@@ -37,7 +37,7 @@ const SignupPage = () => {
     const setupAccount = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/auth/setup-account', { email, name: userName, password });
+            await axiosInstance.post('/api/auth/setup-account', { email, name: userName, password }); // ✅ Correct route
             alert('Account setup successful. Please login.');
             navigate('/login');
         } catch (error) {
