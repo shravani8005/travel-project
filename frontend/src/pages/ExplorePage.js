@@ -99,9 +99,9 @@ const ExplorePage = () => {
               />
             </label>
             <p><strong>Availability:</strong> {trip.available ? 'Available' : 'Unavailable'}</p>
-            {/* Book Trip button removed */}
-            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginRight: '10px' }}>View Reviews</button>
-            <button onClick={() => alert('Add review feature coming soon!')}>Add Review</button>
+            {/* Removed Book Trip button only */}
+            <button onClick={() => alert('View reviews feature coming soon!')} style={{ marginLeft: '10px' }}>View Reviews</button>
+            <button onClick={() => alert('Add review feature coming soon!')} style={{ marginLeft: '10px' }}>Add Review</button>
           </div>
         ))}
       </div>
